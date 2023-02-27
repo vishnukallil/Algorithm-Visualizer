@@ -1,0 +1,65 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Title</title>#}
+{#</head>#}
+{#<body>#}
+{#<form action="/forgotpwd" method="POST">#}
+{#<label>Email:</label><input type="email" name="eml">#}
+{#<br>#}
+{##}
+{##}
+{#<label>New password</label><input type="password" name="npwd">#}
+{#    <br>#}
+{#    <input type="submit">#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Password Reset</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/static/regindex/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="/static/admin_templates1/img/logo/AVLOGO.jpg" rel="icon">
+    <!-- Main css -->
+    <link rel="stylesheet" href="/static/regindex/css/style.css">
+</head>
+<body>
+    <div>
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h1 align="center"><strong>Reset Your Password</strong></h1><br>
+                    <form method="POST" class="register-form" id="register-form" action="/forgotpwd">
+                         <div class="form-group">
+                            <input type="email" name="eml" id="email" placeholder="Enter your Email Id" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="npwd" id="contact" placeholder="New Password " required/>
+                        </div>
+                        <div class="form-submit">
+                            <input type="submit" class="submit" name="submit" id="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- JS -->
+    <script src="/static/regindex/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/regindex/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

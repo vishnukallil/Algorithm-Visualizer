@@ -1,0 +1,348 @@
+{% extends "Searching/Search_container.html" %}
+{% block body %}
+
+<!--suppress ALL -->
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet"  />
+</head>
+<body>
+    <h2 class="header"><strong>Jump Search</strong></h2>
+    <div class="row" style="padding:5px">
+        <div class="col-9">
+            <input type="text" id="user-value" placeholder="Enter elements" class="form-control">
+        </div>
+        <div class="col-3">
+            <input type="button" value="Enter" id="lmt-value" style="width:90px"  class="btn" onclick="userarray()">
+        </div>
+    </div>
+    <div class="row" style="padding:5px; margin-top:3px;">
+        <div class="col-9">
+            <input type="text" placeholder="Number to be searched" class="form-control" id="fname" name="fname" />
+        </div>
+        <div class="col-3">
+            <button class="btn"  style="width:90px" onclick="BinarySearch()">Search</button>
+        </div>
+    </div>
+    <div class="row" style="margin-top:3px;">
+        <div class="col-3">
+            <button onClick="window.location.reload();" class="btn" >Reset</button>
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div id="array"></div><br>
+            <div >
+                <div id="text"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      font-size: 35px;
+      text-align: center;
+    }
+
+    #array {
+      background-color: white;
+      height: 220px;
+      width: 100%;
+      margin: auto;
+      position: relative;
+      margin-top: 64px;
+    }
+
+    .block {
+      border-radius: 5px 5px 0px 0px;
+      width: 28px;
+      background-color: #6b5b95;
+      position: absolute;
+      bottom: 0px;
+      transition: 0.2s all ease;
+    }
+
+    .block_id {
+      position: absolute;
+      color: black;
+      margin-top: -20px;
+      width: 100%;
+      text-align: center;
+    }
+    .btn{
+        background-color: #37517e;
+        color: white;
+        border-radius:5px;
+    }
+    .btn:hover{
+        background-color: #1DCCE3;
+        color: #37517e;
+    }
+
+    .txt{
+        height: 40px;
+    }
+
+</style>
+
+<script>
+    var m=[];
+    var container = document.getElementById("array");
+
+    // Function to generate the array of blocks
+    function generatearray() {
+
+      // Creating an array
+      var arr = [];
+      var bb=[];
+    document.getElementById("array").innerHTML="";
+      // Filling array with random values
+      for (var i = 0; i < 20; i++) {
+        // Return a value from 1 to 100 (both inclusive)
+        var val = Number(Math.ceil(Math.random() * 100));
+        arr.push(val);
+      }
+
+      m=arr;
+
+      // Sorting Array in ascending order
+      arr.sort(function (a, b) {
+        return a - b;
+      });
+
+      for (var i = 0; i < 20; i++) {
+        var value = arr[i];
+
+        // Creating element div
+        var array_ele = document.createElement("div");
+
+        // Adding class 'block' to div
+        array_ele.classList.add("block");
+
+        // Adding style to div
+        array_ele.style.height = `${value * 3}px`;
+        array_ele.style.transform = `translate(${i * 30}px)`;
+
+        // Creating label element for displaying
+        // size of particular block
+        var array_ele_label = document.createElement("label");
+        array_ele_label.classList.add("block_id");
+        array_ele_label.innerText = value;
+
+        // Appending created elements to merge.html
+        array_ele.appendChild(array_ele_label);
+        container.appendChild(array_ele);
+      }
+    }
+
+
+    function userarray() {
+
+      // Creating an array
+
+          val=document.getElementById("user-value").value;
+                    m=val.split(",")
+    document.getElementById("array").innerHTML="";
+{#                    alert("m--"+m)#}
+
+
+
+      var arr = [];
+
+      // Filling array with random values
+      for (var i = 0; i <m.length; i++) {
+        // Return a value from 1 to 100 (both inclusive)
+        var val1 = parseInt(m[i])
+        arr.push(val1);
+      }
+
+      // Sorting Array in ascending order
+      arr.sort(function (a, b) {
+        return a - b;
+      });
+        m=arr
+      for (var i = 0; i <arr.length; i++) {
+        var value = arr[i];
+
+        // Creating element div
+        var array_ele = document.createElement("div");
+
+        // Adding class 'block' to div
+        array_ele.classList.add("block");
+
+        // Adding style to div
+        array_ele.style.height = `${value * 3}px`;
+        array_ele.style.transform = `translate(${i * 30}px)`;
+
+        // Creating label element for displaying
+        // size of particular block
+        var array_ele_label = document.createElement("label");
+        array_ele_label.classList.add("block_id");
+        array_ele_label.innerText = value;
+
+        // Appending created elements to merge.html
+        array_ele.appendChild(array_ele_label);
+        container.appendChild(array_ele);
+      }
+    }
+
+    // Asynchronous BinarySearch function
+    async function BinarySearch(delay = 100) {
+
+      var blocks = document.querySelectorAll(".block");
+      var output = document.getElementById("text");
+
+      //Extracting the value of the element to be searched
+      var num = document.getElementById("fname").value;
+      let x=num
+        n = m.length;
+
+      //Colouring all the blocks voilet
+      for (var i = 0; i < blocks.length; i += 1) {
+
+{#              blocks[i].style.backgroundColor = "#ce1524";#}
+
+
+              await new Promise((resolve) =>
+          setTimeout(() => {
+            resolve();
+          }, delay)
+        );
+
+      }
+      output.innerText = "";
+
+      // BinarySearch Algorithm
+
+      var mid = 0;
+      var end =m.length;
+      var flag = 0;
+
+    let jump = Math.ceil(Math.sqrt(n));
+
+{#    alert(jump)#}
+
+
+    let prev = 0;
+    ms=Math.min(jump-1, n);
+{#    alert(ms);#}
+
+
+
+    let left=0;
+      let  right = n;
+
+     while (left < n && m[left] <= x)
+        {
+            right = Math.min(n - 1, left + jump);
+
+
+            if (m[left] <= x && m[right] >= x)
+                break;
+
+
+{#           alert(left+"left");#}
+
+                await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+
+
+                    console.log("red color");
+                    blocks[left].style.backgroundColor = "#ff0000";
+
+  left += jump
+
+
+
+        }
+
+            if (left >= n || m[left] > x)
+               return -1
+    else {
+{#         alert(left);#}
+{#                print(left)#}
+
+                                await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+
+
+                    console.log("red color");
+{#                    alert(left)#}
+                    if(left<n) {
+{#                        blocks[left].style.backgroundColor = "#ff0000";#}
+                        blocks[left].style.backgroundColor = "#ff0000";
+                    }
+
+            }
+
+    right = Math.min(n - 1, right)
+    temp = left
+
+
+
+    while (temp <= right && m[temp] <= x) {
+{#        alert("linear"+temp)#}
+
+                        await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+
+
+                    console.log("red color");
+
+                    blocks[temp].style.backgroundColor = "#faff21";
+
+        if (m[temp] == x) {
+{#            alert(temp)#}
+                            await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+
+
+                    console.log("red color");
+                    blocks[temp].style.backgroundColor = "#1bff13";
+            return temp
+        }
+        temp += 1
+    }
+        return -1
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    generatearray();
+
+</script>
+{% endblock %}

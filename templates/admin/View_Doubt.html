@@ -1,0 +1,27 @@
+{% extends "admin/admin_index.html" %}
+{% block body %}
+<form action="/doubtclr1" method="post"><br>
+    <h2 align="center"><strong>Doubts</strong></h2>
+<br><br>
+    <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th >S/no</th>
+        <th >Date</th>
+        <th >Userinfo</th>
+        <th >Doubt</th>
+        <th >Reply</th>
+      </tr>
+    </thead>
+        {% for i in data %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>&nbsp;{{ i['date']}}</td>
+        <td>{{ i['firstname']}}</td>
+        <td>&nbsp;{{ i['doubt']}}</td>
+        <td><a href="/dbtclrply/{{ i['Did'] }}">Answer</a></td>
+      </tr>
+        {% endfor %}
+    </table>
+</form>
+{% endblock %}

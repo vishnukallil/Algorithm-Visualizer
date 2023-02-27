@@ -1,0 +1,356 @@
+<script src="/static/jquery.min.js"></script>
+{% extends "Sort/Sort_container.html" %}
+{% block body %}
+<head>
+    <title>Bubble Sort</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    .header {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #array {
+        background-color: white;
+        height: 330px;
+        width: auto;
+        margin:0 auto;
+        position: relative;
+        margin-top: 64px;
+    }
+
+    .block {
+        width: 28px;
+        background-color: #6b5b95;
+        position: absolute;
+        bottom: 0px;
+        transition: 0.2s all ease;
+         border-radius: 5px 5px 0px 0px;
+    }
+
+    .block_id {
+        position: absolute;
+        color: black;
+        margin-top: -20px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn{
+        background-color: #37517e;
+        color: white;
+        border-radius:5px;
+    }
+    .btn:hover{
+        background-color: #1DCCE3;
+        color: #37517e;
+    }
+
+    .txt{
+        height: 40px;
+    }
+.btns{
+    height:40px;
+    width:40px;
+    border-radius:30px;
+}
+
+</style>
+
+{#<body>#}
+	 <h2 align="center"><strong>Bubble Sort</strong></h2>
+
+     <div class="container">
+         <div class="row" >
+                <div class="col-8">
+                    <input type="text" id="user-value" placeholder="Enter elements" class="txt">
+                    <input type="button" value="Enter"  style="width:90px" id="lmt-value" class="btn">
+                    <input type="button" value="Random" id="gr" class="btn">
+                    <input type="button" value="Sort" id="sort" class="btn">
+                    <button onClick="window.location.reload();" class="btn">Reset</button>
+                </div>
+             <div class="col-2">
+{#                 <label>Timer</label>#}
+{#                 <p id="demo"><b></b></p>#}
+             </div>
+              <div class="col-2">
+                   <label>Delay Speed</label>
+                    <input type="range" min="5" max="1000"  value="505" class="custom-range" id="myRange">
+              </div>
+         </div>
+     </div>
+
+    <div class="row" >
+        <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div id="array"></div><br>
+                    <div >
+                        <div id="text"></div>
+                    </div>
+                </div>
+    </div>
+    <div>
+     <table>
+        <tr>
+            <td width="60px"><button class="btns" style="background-color: #13CE66" value=""></button></td>
+            <td width="70px">Sorted</td>
+            <td width="60px"><button  class="btns" style="background-color: #FF4949"></button></td>
+            <td width="100px">Movement</td>
+            <td width="60px"><button style="background-color: #6b5b95" class="btns"></button></td>
+            <td width="100px">Default</td>
+        </tr>
+    </table>
+    </div>
+
+<script>
+     var m =[];
+     var val="";
+         var container = document.getElementById("array");
+
+        // Function to generate the array of blocks
+         function Userarray(){
+             document.getElementById("array").innerHTML="";
+             val=document.getElementById("user-value").value;
+             m=val.split(",")
+                 generatearray();
+             document.getElementById("user-value").value="";
+         }
+         function generatearray() {
+
+             for (var i = 0; i < m.length; i++) {
+
+                 // Return a value from 1 to 100 (both inclusive)
+                 var value = m[i];
+
+                 // Creating element div
+                 var array_ele = document.createElement("div");
+
+                 // Adding class 'block' to div
+                 array_ele.classList.add("block");
+                if(m[i]>55){
+                   array_ele.style.height = `${value * 3}px`;
+                    array_ele.style.transform = `translate(${i * 30}px)`;
+                }
+                else {
+                    // Adding style to div
+                    array_ele.style.height = `${value * 5}px`;
+                    array_ele.style.transform = `translate(${i * 30}px)`;
+                }
+                 // Creating label element for displaying
+                 // size of particular block
+                 var array_ele_label = document.createElement("label");
+                 array_ele_label.classList.add("block_id");
+                 array_ele_label.innerText = value;
+
+                 // Appending created elements to merge.html
+                 array_ele.appendChild(array_ele_label);
+                 container.appendChild(array_ele);
+             }
+         }
+
+    // Promise to swap two blocks
+    function swap(el1, el2) {
+        return new Promise((resolve) => {
+
+            // For exchanging styles of two blocks
+            var temp = el1.style.transform;
+            el1.style.transform = el2.style.transform;
+            el2.style.transform = temp;
+
+            window.requestAnimationFrame(function() {
+
+                // For waiting for .25 sec
+                setTimeout(() => {
+                    container.insertBefore(el2, el1);
+                    resolve();
+                }, 250);
+            });
+        });
+    }
+
+    // Asynchronous BubbleSort function
+             //change delay of sort
+    async function BubbleSort(delay = 75) {
+             flag=0;
+
+             timer1();
+             delay= document.getElementById("myRange").value;
+
+        var blocks = document.querySelectorAll(".block");
+
+        // BubbleSort Algorithm
+        for (var i = 0; i < blocks.length; i += 1) {
+            for (var j = 0; j < blocks.length - i - 1; j += 1) {
+
+                // To change background-color of the
+                // blocks to be compared
+                blocks[j].style.backgroundColor = "#FF4949";
+                blocks[j + 1].style.backgroundColor = "#FF4949";
+
+                // To wait for .1 sec
+                await new Promise((resolve) =>
+                    setTimeout(() => {
+                        resolve();
+                    }, delay)
+                );
+
+                console.log("run");
+                var value1 = Number(blocks[j].childNodes[0].innerHTML);
+                var value2 = Number(blocks[j + 1]
+                            .childNodes[0].innerHTML);
+
+                // To compare value of two blocks
+                if (value1 > value2) {
+                    await swap(blocks[j], blocks[j + 1]);
+                    blocks = document.querySelectorAll(".block");
+                }
+
+                // Changing the color to the previous one
+                blocks[j].style.backgroundColor = "#6b5b95";
+                blocks[j + 1].style.backgroundColor = "#6b5b95";
+            }
+
+            //changing the color of greatest element
+            //found in the above traversal
+            blocks[blocks.length - i - 1]
+                    .style.backgroundColor = "#13CE66";
+        }
+        // To enable the button "Generate New Array" after final(sorted)
+      document.getElementById("lmt-value").disabled = false;
+      document.getElementById("lmt-value").style.backgroundColor = "#37517e";
+
+      // To enable the button "Selection Sort" after final(sorted)
+      document.getElementById("sort").disabled = false;
+      document.getElementById("sort").style.backgroundColor = "#37517e";
+
+      //To enable the button generate random
+      document.getElementById("gr").disabled = false;
+      document.getElementById("gr").style.backgroundColor = "#37517e";
+
+      flag=1;
+
+
+
+    }
+
+    var flag=0;
+    function disable()
+    {
+      // To disable the button "Generate New Array"
+      document.getElementById("lmt-value")
+      .disabled = true;
+      document.getElementById("lmt-value")
+      .style.backgroundColor = "#AED6F1";
+
+      // To disable the button "Insertion Sort"
+      document.getElementById("sort")
+      .disabled = true;
+      document.getElementById("sort")
+      .style.backgroundColor = "#AED6F1";
+      //To disable button generate random
+        document.getElementById("gr")
+      .disabled = true;
+      document.getElementById("gr")
+      .style.backgroundColor = "#AED6F1";
+    }
+
+     $("#lmt-value").click(function () {
+    // Calling  user generatearray function
+    Userarray();
+     });
+    $("#sort").click(function () {
+    // Calling BubbleSort function
+    BubbleSort();
+    disable();
+    document.getElementById("limit").value="";
+    });
+
+     function Randomarray() {
+
+                     document.getElementById("array").innerHTML="";
+
+                     for (var i = 0; i <=10; i++) {
+
+                         // Return a value from 1 to 100 (both inclusive)
+                         var value = Math.floor(Math.random() * 100) + 1;
+
+
+                         // Creating element div
+                         var array_ele = document.createElement("div");
+
+                         // Adding class 'block' to div
+                         array_ele.classList.add("block");
+
+                         // Adding style to div
+                         array_ele.style.height = `${value * 3}px`;
+                         array_ele.style.transform = `translate(${i * 30}px)`;
+
+                         // Creating label element for displaying
+                         // size of particular block
+                         var array_ele_label = document.createElement("label");
+                         array_ele_label.classList.add("block_id");
+                         array_ele_label.innerText = value;
+
+                         // Appending created elements to merge.html
+                         array_ele.appendChild(array_ele_label);
+                         container.appendChild(array_ele);
+                     }
+
+                 }
+     $("#gr").click(function () {
+
+    // Calling generatearray function
+    Randomarray();
+    });
+
+</script>
+</body>
+
+<script>
+
+var i=0;
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+
+function  timer1() {
+var x = setInterval(function() {
+    i=i+1;
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+{#  document.getElementById("demo").innerHTML = days + "d " + hours + "h "#}
+{#  + minutes + "m " + seconds + "s ";#}
+
+if(flag==0) {
+    document.getElementById("demo").innerHTML = i.toString();
+}
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
+}
+// Update the count down every 1 second
+</script>
+{% endblock %}

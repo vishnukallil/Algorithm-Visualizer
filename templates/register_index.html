@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register Now</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/static/regindex/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link href="/static/admin_templates1/img/logo/AVLOGO.jpg" rel="icon">
+    <!-- Main css -->
+    <link rel="stylesheet" href="/static/regindex/css/style.css">
+</head>
+<script src="/static/jquery.min.js"></script>
+<body>
+    <div>
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <form method="POST" class="register-form" id="register-form" action="/form1_post">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" name="txt_fname" id="name" placeholder="First Name" required/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="txt_lname" id="father_name" placeholder="Last Name" required/>
+                            </div>
+                        </div>
+                        <div class="form-radio">
+                            <label for="gender" class="radio-label">Gender :</label>
+                            <div class="form-radio-item">
+                                <input type="radio" value="male" name="gender" id="male" checked>
+                                <label for="male">Male</label>
+                                <span class="check"></span>
+                            </div>
+                            <div class="form-radio-item">
+                                <input type="radio" value="female" name="gender" id="female">
+                                <label for="female">Female</label>
+                                <span class="check"></span>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <input type="email" name="txt_email" id="email" placeholder="Email ID " required/>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" pattern="[1-9]{1}[0-9]{9}" name="txt_phone" id="contact" placeholder="Contact " required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="txt_psw" id="pass" placeholder="Password " required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="txt_psw1" id="cpass" placeholder="Confirm Password " required/>
+                            <span id="message" class="badge badge-light"></span>
+                        </div>
+                        <div class="form-submit">
+                            <input type="reset" value="Clear" class="submit" name="reset" id="reset" />
+                            <input type="submit" value="Register" class="submit" name="submit" id="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="/static/regindex/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/regindex/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+<script>
+
+$(document).ready(function(){
+   $('#submit').on('click', function(){
+      var passInput=$("#pass").val();
+       var passInput2=$("#cpass").val();
+
+       if(passInput!=passInput2){
+           $('#message').html('Incorrect pass').css('color','red')
+           return false
+       }
+  })
+})
+</script>

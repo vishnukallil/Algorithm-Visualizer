@@ -1,0 +1,12 @@
+{% extends "admin/admin_index.html" %}
+{% block body %}
+<form action="/dbtclrpo" method="post"><br>
+    <h2 align="center"><strong>Doubt Reply</strong></h2>
+    <br>
+    <center>
+      <textarea name="Reply" cols="60" rows="9" placeholder="Enter your answer" required></textarea>
+      <br /><br />
+      <input type="submit" class="btn btn-info" value="Send" />
+    </center>
+</form>
+{% endblock %}

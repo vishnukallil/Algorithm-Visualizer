@@ -1,0 +1,401 @@
+<script src="/static/jquery.min.js"></script>
+{% extends "Sort/Sort_container.html" %}
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Insertion sort</title>
+    <style>
+
+    .mySlides {
+      display: none;
+    }
+
+    .head {
+      margin-top: 20px;
+      margin-right: 20vw;
+      margin-left: 20vw;
+      text-align: center;
+      font-size: 30px;
+      background-color: #6f459e;
+      color: white;
+      border-radius:19px;
+      font-weight: bolder;
+    }
+
+    .data-container {
+      width: 600px;
+      height: 320px;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .bar {
+      width: 28px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      background-color: #6b5b95;
+      transition: 0.2s all ease;
+      border-radius: 5px 5px 0px 0px;
+    }
+
+    .bar__id {
+      position: absolute;
+      top: -24px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn1
+    {
+    padding: 12px;
+    font-weight: bolder;
+    background-color: #6f459e;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    border: white;
+    margin-top: 1vw;
+    margin-right: 1vw;
+    }
+
+    .btn2
+    {
+    padding: 12px;
+    font-weight: bolder;
+    background-color: #6f459e;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    border: white
+    }
+
+    #ele{
+      text-align: center;
+      height: 5px;
+    }
+
+    .btn{
+        background-color: #37517e;
+        color: white;
+    }
+
+    .btn:hover{
+        background-color: #1DCCE3;
+         color: #37517e;
+    }
+
+    .txt{
+        height: 40px;
+    }
+.btns{
+    height:40px;
+    width:40px;
+    border-radius:30px;
+}
+</style>
+</head>
+<body>
+    <h2 align="center"><strong>Insertion Sort</strong></h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" id="user-value" placeholder="Enter elements" class="txt">
+                <input type="button" value="Enter" onclick="Userarray()" id="lmt-value" class="btn">
+                <input type="button" value="Generate Random" onclick="Randomarray()" id="gr" class="btn">
+                <input type="button" value="Sort" onclick="InsertionSort(),disable()" id="sort" class="btn">
+                <button onClick="window.location.reload();" class="btn">Reset</button>
+            </div>
+            <div class="col-2">
+{#                 <label>Timer</label>#}
+{#                 <p id="demo"><b></b></p>#}
+            </div>
+            <div class="col-2">
+                <label>Delay Speed</label>
+                <input type="range" class="custom-range" min="5" max="1000" value="505" id="myRange">
+            </div>
+
+        </div>
+    </div><br><br>
+    <section class="data-container" id="array"></section>
+    <br>
+{#    <section id="ele"></section>#}
+    <div>
+     <table>
+        <tr>
+
+            <td width="60px"><button class="btns" style="background-color: #13CE66" value=""></button></td>
+            <td width="70px">Sorted</td>
+
+            <td width="60px"><button  class="btns" style="background-color: darkblue"></button></td>
+            <td width="150px">Selected Element</td>
+
+            <td width="60px"><button style="background-color: #6b5b95" class="btns"></button></td>
+            <td width="100px">Default</td>
+        </tr>
+    </table>
+    </div>
+{#    <div style="margin: auto; width: fit-content;"></div>#}
+</body>
+<!-- linking index.js -->
+<script src="index.js"></script>
+<script>
+    m=[];
+    val="";
+    const container = document.querySelector(".data-container");
+
+    // Function to generate bars
+    function Userarray() {
+
+        val=document.getElementById("user-value").value;
+         document.getElementById("array").innerHTML="";
+        m=val.split(",");
+
+       //For loop to generate 20 bars
+      for (var i = 0; i <m.length; i += 1) {
+
+        // To generate random values from 1 to 100
+        const value =m[i];
+
+         // To create element "div"
+        const bar = document.createElement("div");
+
+        // To add class "bar" to "div"
+        bar.classList.add("bar");
+
+         // Provide height to the bar
+        bar.style.height = `${value * 3}px`;
+        // Translate the bar towards positive X axis
+        bar.style.transform = `translateX(${i * 30}px)`;
+
+        // To create element "label"
+        const barLabel = document.createElement("label");
+
+        // To add class "bar_id" to "label"
+        barLabel.classList.add("bar__id");
+
+        // Assign value to "label"
+        barLabel.innerHTML = value;
+
+        // Append "Label" to "div"
+        bar.appendChild(barLabel);
+
+        // Append "div" to "data-container div"
+        container.appendChild(bar);
+      }
+    }
+
+    // Asynchronous function to perform "Insertion Sort"
+      async function InsertionSort(delay = 75) {
+        flag=0;
+        timer1();
+      delay=document.getElementById("myRange").value;
+      let bars = document.querySelectorAll(".bar");
+
+      // Provide lightgreen colour to 0th bar
+      bars[0].style.backgroundColor = " rgb(49, 226, 13)";
+      for (var i = 1; i < bars.length; i += 1) {
+
+        // Assign i-1 to j
+        var j = i - 1;
+
+        // To store the integer value of ith bar to key
+        var key =
+        parseInt(bars[i].childNodes[0].innerHTML);
+
+        // To store the ith bar height to height
+        var height = bars[i].style.height;
+
+        // For selecting section having id "ele"
+{#        var barval=document.getElementById("ele")#}
+{##}
+{#        // For dynamically Updating the selected element#}
+{#          barval.innerHTML=#}
+{#          `<h6>Element Selected is :${key}</h6>`;#}
+
+        //Provide darkblue color to the ith bar
+        bars[i].style.backgroundColor = "darkblue";
+
+        // To pause the execution of code for 600 milliseconds
+        await new Promise((resolve) =>
+        setTimeout(() => {
+          resolve();
+        }, delay)
+      );
+
+        // For placing selected element at its correct position
+        while (j >= 0 && parseInt(bars[j].childNodes[0].innerHTML) > key) {
+
+          // Provide darkblue color to the jth bar
+          bars[j].style.backgroundColor = "darkblue";
+
+          // For placing jth element over (j+1)th element
+          bars[j + 1].style.height = bars[j].style.height;
+          bars[j + 1].childNodes[0].innerText =
+          bars[j].childNodes[0].innerText;
+
+          // Assign j-1 to j
+          j = j - 1;
+
+          // To pause the execution of code for 600 milliseconds
+          await new Promise((resolve) =>
+            setTimeout(() => {
+              resolve();
+            }, delay)
+          );
+
+          // Provide lightgreen color to the sorted part
+          for(var k=i;k>=0;k--){
+            bars[k].style.backgroundColor = " rgb(49, 226, 13)";
+          }
+        }
+
+        // Placing the selected element to its correct position
+        bars[j + 1].style.height = height;
+        bars[j + 1].childNodes[0].innerHTML = key;
+
+        // To pause the execution of code for 600 milliseconds
+        await new Promise((resolve) =>
+          setTimeout(() => {
+            resolve();
+          }, 600)
+        );
+
+        // Provide light green color to the ith bar
+        bars[i].style.backgroundColor = " rgb(49, 226, 13)";
+      }
+
+      // To enable the button
+      // "Generate New Array" after final(sorted)
+      document.getElementById("lmt-value")
+      .disabled = false;
+      document.getElementById("lmt-value")
+      .style.backgroundColor = "#37517e";
+
+      // To enable the button
+      // "Insertion Sort" after final(sorted)
+      document.getElementById("sort")
+      .disabled = false;
+      document.getElementById("sort")
+      .style.backgroundColor = "#37517e";
+      //To enable the button
+        //after final sort
+        document.getElementById("gr")
+      .disabled = false;
+      document.getElementById("gr")
+      .style.backgroundColor = "#37517e";
+
+      flag=1;
+    }
+
+    var flag=0;
+
+    // Function to disable the button
+    function disable()
+    {
+      // To disable the button "Generate New Array"
+      document.getElementById("lmt-value")
+      .disabled = true;
+      document.getElementById("lmt-value")
+      .style.backgroundColor = "#AED6F1";
+
+      // To disable the button "Insertion Sort"
+      document.getElementById("sort")
+      .disabled = true;
+      document.getElementById("sort")
+      .style.backgroundColor = "#AED6F1";
+      //To disable button generate random
+        document.getElementById("gr")
+      .disabled = true;
+      document.getElementById("gr")
+      .style.backgroundColor = "#AED6F1";
+    }
+
+
+    function Randomarray(num = 10) {
+         document.getElementById("array").innerHTML="";
+       //For loop to generate 20 bars
+        m=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+      for (let i = 0; i < num; i += 1) {
+
+        // To generate random values from 1 to 100
+        const value = Math.floor(Math.random() * 100) + 1;
+
+        m[i]=value;
+         // To create element "div"
+        const bar = document.createElement("div");
+
+        // To add class "bar" to "div"
+        bar.classList.add("bar");
+
+         // Provide height to the bar
+        bar.style.height = `${value * 3}px`;
+        // Translate the bar towards positive X axis
+        bar.style.transform = `translateX(${i * 30}px)`;
+
+        // To create element "label"
+        const barLabel = document.createElement("label");
+
+        // To add class "bar_id" to "label"
+        barLabel.classList.add("bar__id");
+
+        // Assign value to "label"
+        barLabel.innerHTML = value;
+
+        // Append "Label" to "div"
+        bar.appendChild(barLabel);
+
+        // Append "div" to "data-container div"
+        container.appendChild(bar);
+      }
+    }
+
+{#    // Function to generate new random array#}
+{#    function generate1()#}
+{#    {#}
+{#        generatebars1();#}
+{#    }#}
+
+</script>
+
+<script>
+
+var i=0;
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+
+function  timer1() {
+var x = setInterval(function() {
+    i=i+1;
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+{#  document.getElementById("demo").innerHTML = days + "d " + hours + "h "#}
+{#  + minutes + "m " + seconds + "s ";#}
+
+if(flag==0) {
+    document.getElementById("demo").innerHTML = i.toString();
+}
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
+}
+// Update the count down every 1 second
+</script>
+
+{% endblock %}

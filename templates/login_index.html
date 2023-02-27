@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/loginindex/fonts/icomoon/style.css">
+    <link href="/static/admin_templates1/img/logo/AVLOGO.jpg" rel="icon">
+    <link rel="stylesheet" href="/static/loginindex/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/loginindex/css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="/static/loginindex/css/style.css">
+
+    <title>Login</title>
+  </head>
+  <body>
+  
+
+  <div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2" style="background-image: url('/static/loginindex/images/bg123.jpg');"></div>
+    <div class="contents order-2 order-md-1">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-7">
+            <h3>Login to <strong>Algorithm Visualizer</strong></h3>
+            <p class="mb-4"> Algorithm Visualizer is an interactive online platform that visualizes algorithms from code.</p>
+            <form action="/loginpost" method="post">
+              <div class="form-group first">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="uname" placeholder="Enter username" id="username" required>
+              </div>
+              <div class="form-group last mb-3">
+                <label for="password" class="">Password</label>
+                <input type="password" class="form-control" name="pwd" placeholder="Your Password" id="password" required>
+              </div>
+              
+              <div class="d-flex mb-5 align-items-center">
+                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                  <input type="checkbox" checked="checked"/>
+                  <div class="control__indicator"></div>
+                </label>
+                <span class="ml-auto"><a href="/fgt_pwd" id="at" class="forgot-pass">Forgot Password</a></span>
+                  <span class="ml-auto"><a href="/regindex" id="at" class="forgot-pass">Register Now!</a></span>
+              </div>
+
+              <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                <center><label>OR</label></center>
+
+            </form>
+              <a href="/public"><input type="button" value="Guest" class="btn btn-block btn-primary"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+    
+    
+
+    <script src="/static/loginindex/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/loginindex/js/popper.min.js"></script>
+    <script src="/static/loginindex/js/bootstrap.min.js"></script>
+    <script src="/static/loginindex/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,345 @@
+{% extends "Searching/Search_container.html" %}
+{% block body %}
+
+<!--suppress ALL -->
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <h2 class="header"><strong>Interpolation Search</strong></h2>
+    <div class="row" style="padding:5px">
+        <div class="col-9">
+            <input type="text" id="user-value" placeholder="Enter elements" class="form-control">
+        </div>
+        <div class="col-3">
+            <input type="button" value="Enter" id="lmt-value" style="width:90px"  class="btn" onclick="Userarray()">
+        </div>
+    </div>
+    <div class="row" style="padding:5px; margin-top:3px;">
+        <div class="col-9">
+            <input type="text" placeholder="Number to be searched" class="form-control" id="fname" name="fname" />
+        </div>
+        <div class="col-3">
+            <button class="btn"  style="width:90px" onclick="BinarySearch()">Search</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" style="margin-top:3px;">
+            <button onClick="window.location.reload();" class="btn" >Reset</button>
+        </div>
+    </div>
+    <div class="row"  style="margin-top:10px;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div id="array"></div><br>
+            <div >
+                <div id="text"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<style>
+
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      font-size: 35px;
+      text-align: center;
+    }
+
+
+    #array {
+        align-items:center;
+      background-color: white;
+      height: 220px;
+      width: 100%;
+      margin: auto;
+      position: relative;
+      margin-top: 64px;
+
+
+    }
+
+    .block {
+      border-radius: 5px 5px 0px 0px;
+      width: 28px;
+      background-color: #6b5b95;
+      position: absolute;
+      bottom: 0px;
+      transition: 0.2s all ease;
+
+    }
+
+    .block_id {
+      position: absolute;
+      color: black;
+      margin-top: -20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn{
+        background-color: #37517e;
+        color: white;
+        border-radius:5px;
+    }
+
+    .btn:hover{
+        background-color: #1DCCE3;
+        color: #37517e;
+    }
+
+    .txt{
+        height: 40px;
+    }
+
+</style>
+
+<script>
+    var m=[];
+    var container = document.getElementById("array");
+
+    // Function to generate the array of blocks
+    function Randomarray() {
+{#    alert("JII")#}
+      // Creating an array
+      var arr = [];
+    document.getElementById("array").innerHTML="";
+      // Filling array with random values
+      for (var i = 0; i < 10; i++) {
+        // Return a value from 1 to 100 (both inclusive)
+        var val = Number(Math.ceil(Math.random() * 100));
+        arr.push(val);
+      }
+
+
+      // Sorting Array in ascending order
+      arr.sort(function (a, b) {
+        return a - b;
+      });
+      m=arr;
+
+      for (var i = 0; i < 10; i++) {
+        var value = arr[i];
+
+        // Creating element div
+        var array_ele = document.createElement("div");
+
+        // Adding class 'block' to div
+        array_ele.classList.add("block");
+
+        // Adding style to div
+        array_ele.style.height = `${value * 3}px`;
+        array_ele.style.transform = `translate(${i * 30}px)`;
+
+        // Creating label element for displaying
+        // size of particular block
+        var array_ele_label = document.createElement("label");
+        array_ele_label.classList.add("block_id");
+        array_ele_label.innerText = value;
+
+        // Appending created elements to merge.html
+        array_ele.appendChild(array_ele_label);
+        container.appendChild(array_ele);
+      }
+    }
+
+    function Userarray() {
+
+      // Creating an array
+
+          val=document.getElementById("user-value").value;
+                    m=val.split(",")
+    document.getElementById("array").innerHTML="";
+
+      var arr = [];
+
+      // Filling array with random values
+      for (var i = 0; i <m.length; i++) {
+        // Return a value from 1 to 100 (both inclusive)
+    {#      alert(m[i]);#}
+        var val1 = parseInt(m[i])
+        arr.push(val1);
+      }
+
+      // Sorting Array in ascending order
+      arr.sort(function (a, b) {
+        return a - b;
+      });
+        m=arr;
+      for (var i = 0; i <arr.length; i++) {
+        var value = arr[i];
+
+        // Creating element div
+        var array_ele = document.createElement("div");
+
+        // Adding class 'block' to div
+        array_ele.classList.add("block");
+
+        // Adding style to div
+        array_ele.style.height = `${value * 3}px`;
+        array_ele.style.transform = `translate(${i * 30}px)`;
+
+        // Creating label element for displaying
+        // size of particular block
+        var array_ele_label = document.createElement("label");
+        array_ele_label.classList.add("block_id");
+        array_ele_label.innerText = value;
+
+        // Appending created elements to merge.html
+        array_ele.appendChild(array_ele_label);
+        container.appendChild(array_ele);
+      }
+    }
+
+    // Asynchronous BinarySearch function
+    async function BinarySearch(delay = 300) {
+        var blocks = document.querySelectorAll(".block");
+        var output = document.getElementById("text");
+        {##}
+        {#        //Extracting the value of the element to be searched#}
+        var num = document.getElementById("fname").value;
+        {##}
+        {#        //Colouring all the blocks voilet#}
+        for (var i = 0; i < blocks.length; i += 1) {
+            blocks[i].style.backgroundColor = "#6b5b95";
+        }
+        {##}
+        {##}
+        {#        // To wait for .1 sec#}
+
+        {##}
+        {##}
+
+        {#        arr = m;#}
+
+        var flag = 0;
+
+        {##}
+        {#        // Since array is sorted, an element present#}
+        {#        // in array must be in range defined by corner#}
+       async function interpolationSearch(arr, lo, hi, x) {
+{#           alert("X" + x)#}
+            let pos;
+            if (lo <= hi && x >= m[lo] && x <= m[hi]) {
+
+                pos = lo + Math.floor(((hi - lo) / (arr[hi] - arr[lo])) * (x - arr[lo]));;
+
+{#                alert(pos+"=pos")#}
+
+
+                if (m[pos] == x) {
+                    output.innerText = "Element Found at position " + ( pos + 1);
+
+                        await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+                    blocks[pos].style.backgroundColor = "#13CE66";
+                    for(i=0;i<=pos-1;i++) {
+                            await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+
+{#                    blocks[i].style.backgroundColor = "#ff0000";#}
+                }
+
+
+
+                         await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+
+
+                    flag = 1;
+
+                    {#                break;#}
+                }
+
+
+                {##}
+                {#            // If x is larger, x is in right sub array#}
+                if (m[pos] < x) {
+                        await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+{#                    alert("left")#}
+                    blocks[pos].style.backgroundColor = "#ff0000";
+                    return interpolationSearch(m, pos + 1, hi, x);
+                }
+                {##}
+                {#            // If x is smaller, x is in left sub array#}
+                if (m[pos] > x) {
+                        await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+{#                    alert(right)#}
+                    blocks[pos].style.backgroundColor = "#ff0000";
+                    return interpolationSearch(m, lo, pos - 1, x);
+                }
+
+                if (flag ==0) {
+                        await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+                    output.innerText = "Element Not Found";
+                        for(i=0;i<=blocks.length;i++) {
+                            blocks[i].style.backgroundColor = "#ff0000";
+                        }
+                }
+            }
+            else {
+                    await new Promise((resolve) =>
+                      setTimeout(() => {
+                        resolve();
+                      }, delay)
+                    );
+                output.innerText = "Element Not Found";
+{#                alert("else2")#}
+                for(i=0;i<=blocks.length;i++) {
+                    blocks[i].style.backgroundColor = "#ff0000";
+                }
+            }
+        }
+
+{#        lo = 0;#}
+        n = m.length;
+        x = num
+        let index = interpolationSearch(m, 0, n - 1, x);
+
+// If element was found
+{#        if (index != -1) {#}
+{#            document.write(`Element found at index ${index}`)#}
+{#        } else {#}
+{#            document.write("Element not found");#}
+{#        }#}
+
+
+    }
+
+    // Calling generatearray function
+    Randomarray();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "Sort/Sort_container.html" %}
+{% block body %}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/merg/vendor/normalize.css" />
+    <link rel="stylesheet" href="/static/merg/vendor/fontawesome/fontawesome.css" />
+    <link href="https://fonts.googleapis.com/css?family=Livvic&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/merg/sass/main.css" />
+    <title>Merge Sort</title>
+</head>
+
+<body>
+<h2 align="center"><strong>Merge Sort</strong></h2>
+    <div id="settings"></div>
+    <main id="mn">
+        <div class="container">
+            <div class="row">
+                <div class="col-10">
+                    <input id="arr" type="text" placeholder="Enter elements">
+                    <button id="save-settings" class="b-cs">Save</button>
+                    <button id="sort" class="b-cs">Sort</button>
+                    <button onClick="window.location.reload();" class="b-cs">Reset</button>
+                </div>
+                <div class="col-2">
+                    <label>Delay Speed</label>
+                    <input type="range" min="300" max="3000" value="1550" class="custom-range" id="myRange">
+                </div>
+            </div>
+        </div>
+        <section class="animation-zone"></section>
+    </main>
+
+    <script src="/static/merg/vendor/fontawesome/fontawesome.js"></script>
+    <script src="/static/merg/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/merg/js/arrays.js"></script>
+    <script src="/static/merg/js/main.js"></script>
+    <script src="/static/merg/js/settings.js"></script>
+    <script src="/static/merg/js/animation.js"></script>
+</body>
+{% endblock %}
+

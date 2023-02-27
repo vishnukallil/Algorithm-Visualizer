@@ -1,0 +1,348 @@
+{% extends "Sort/Sort_container.html" %}
+{% block body %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Selection Sort</title>
+    <style>
+
+        .mySlides {
+            display: none;
+        }
+
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #array {
+            background-color: white;
+            height: 300px;
+            width: 600px;
+            margin:0 auto;
+            position: relative;
+            margin-top: 64px;
+        }
+
+        .block {
+            width: 28px;
+            background-color: #6b5b95;
+            position: absolute;
+            bottom: 0px;
+            transition: 0.2s all ease;
+             border-radius: 5px 5px 0px 0px;
+        }
+
+        .block_id {
+            position: absolute;
+            color: black;
+            margin-top: -20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn{
+            background-color: #37517e;
+            color: white;
+            border-radius:5px;
+        }
+        .btn:hover{
+            background-color: #1DCCE3;
+            color: #37517e;
+        }
+
+        .txt{
+            height: 40px;
+        }
+        .btns{
+    height:40px;
+    width:40px;
+    border-radius:30px;
+}
+
+    </style>
+</head>
+<body >
+    <h2 align="center"><strong>Selection Sort</strong></h2>
+    <div class="container">
+        <div class="row">
+           <div class="col-8">
+               <input type="text" class="txt" id="user-value" placeholder="Enter elements">
+               <input type="button" class="btn" value="Enter" onclick="Userarray()" id="lmt-value">
+               <input type="button" value="Generate Random" class="btn"  onclick="Randomarray()" id="gr">
+               <input type="button" value="Sort" class="btn" onclick="SelectionSort(),disable()" id="sort">
+               <button onClick="window.location.reload();" class="btn">Reset</button>
+           </div>
+            <div class="col-2">
+{#                 <label>Timer</label>#}
+{#                 <p id="demo"><b></b></p>#}
+            </div>
+           <div class="col-2">
+               <label>Delay Speed</label>
+               <input type="range" class="custom-range" min="5" max="1000" value="505" id="myRange">
+           </div>
+        </div>
+   </div>
+   <section class="data-container" id="array"></section><br><br>
+
+<div>
+     <table>
+        <tr>
+            <td width="60px"><button class="btns" style="background-color: rgb(49, 226, 13)" value=""></button></td>
+            <td width="70px">Sorted</td>
+            <td width="60px"><button  class="btns" style="background-color: darkblue"></button></td>
+            <td width="150px">Selected Element</td>
+            <td width="60px"><button style="background-color: #6b5b95" class="btns"></button></td>
+            <td width="100px">Default</td>
+            <td width="60px"><button style="background-color: rgb(24, 190, 255)" class="btns"></button></td>
+            <td width="100px">Traverse</td>
+            <td width="60px"><button style="background-color: red" class="btns"></button></td>
+            <td width="100px">Movement</td>
+        </tr>
+    </table>
+    </div>
+
+</body>
+<!-- linking jquery.js -->
+<script src="/static/jquery.min.js"></script>
+
+<script>
+    m=[];
+    val="";
+    const container = document.querySelector(".data-container");
+
+    // function to generate bars
+    function Userarray() {
+
+        val=document.getElementById("user-value").value;
+         document.getElementById("array").innerHTML="";
+
+                     m=val.split(",");
+
+      //for loop to generate  bars
+      for (var i = 0; i < m.length; i += 1) {
+
+        // To generate random values from 1 to 100
+        const value = m[i];
+
+        // To create element "div"
+        const bar = document.createElement("div");
+
+        // To add class "bar" to "div"
+        bar.classList.add("block");
+
+                    bar.style.height = `${value * 3}px`;
+                    bar.style.transform = `translate(${i * 30}px)`;
+
+        const barLabel = document.createElement("label");
+{#          array_ele_label.classList.add("block_id");#}
+
+        // To add class "bar_id" to "label"
+        barLabel.classList.add("block_id");
+
+        // Assign value to "label"
+        barLabel.innerHTML = value;
+
+        // Append "Label" to "div"
+        bar.appendChild(barLabel);
+
+        // Append "div" to "data-container div"
+        container.appendChild(bar);
+      }
+
+    }
+
+    // asynchronous function to perform "Selection Sort"
+    async function SelectionSort(delay = 75) {
+        flag=0;
+        timer1();
+
+     delay= document.getElementById("myRange").value;
+      let bars = document.querySelectorAll(".block");
+      // Assign 0 to min_idx
+       var min_idx = 0;
+       for (var i = 0; i < bars.length; i += 1) {
+
+        // Assign i to min_idx
+        min_idx = i;
+
+        // Provide darkblue color to the ith bar
+        bars[i].style.backgroundColor = "darkblue";
+        for (var j = i + 1; j < bars.length; j += 1) {
+
+          // Provide red color to the jth bar
+          bars[j].style.backgroundColor = "red";
+
+          // To pause the execution of code for 300 milliseconds
+          await new Promise((resolve) =>
+            setTimeout(() => {
+              resolve();
+            }, delay)
+          );
+
+          // To store the integer value of jth bar to var1
+          var val1 = parseInt(bars[j].childNodes[0].innerHTML);
+
+          // To store the integer value of (min_idx)th bar to var2
+          var val2 = parseInt(bars[min_idx].childNodes[0].innerHTML);
+
+          // Compare val1 & val2
+          if (val1 < val2) {
+            if (min_idx !== i) {
+
+              // Provide skyblue color to the (min-idx)th bar
+              bars[min_idx].style.backgroundColor = "  rgb(24, 190, 255)";
+            }
+            min_idx = j;
+          } else {
+
+            // Provide skyblue color to the jth bar
+            bars[j].style.backgroundColor = "  rgb(24, 190, 255)";
+          }
+        }
+
+        // To swap ith and (min_idx)th bar
+        var temp1 = bars[min_idx].style.height;
+        var temp2 = bars[min_idx].childNodes[0].innerText;
+        bars[min_idx].style.height = bars[i].style.height;
+        bars[i].style.height = temp1;
+        bars[min_idx].childNodes[0].innerText = bars[i].childNodes[0].innerText;
+        bars[i].childNodes[0].innerText = temp2;
+
+        // To pause the execution of code for 300 milliseconds
+        await new Promise((resolve) =>
+          setTimeout(() => {
+            resolve();
+          }, delay)
+        );
+
+        // Provide skyblue color to the (min-idx)th bar
+        bars[min_idx].style.backgroundColor = "  rgb(24, 190, 255)";
+
+        // Provide lightgreen color to the ith bar
+        bars[i].style.backgroundColor = " rgb(49, 226, 13)";
+      }
+
+      // To enable the button "Generate New Array" after final(sorted)
+      document.getElementById("lmt-value").disabled = false;
+      document.getElementById("lmt-value").style.backgroundColor = "#37517e";
+
+      // To enable the button "Selection Sort" after final(sorted)
+      document.getElementById("sort").disabled = false;
+      document.getElementById("sort").style.backgroundColor = "#37517e";
+
+      //To enable the button generate random
+      document.getElementById("gr").disabled = false;
+      document.getElementById("gr").style.backgroundColor = "#37517e";
+      flag=1;
+    }
+
+    var flag=0;
+    //  function to disable the button
+    function disable()
+    {
+      // To disable the button "Generate New Array"
+      document.getElementById("lmt-value").disabled = true;
+      document.getElementById("lmt-value").style.backgroundColor = "#AED6F1";
+
+      // To disable the button "Selection Sort"
+      document.getElementById("sort").disabled = true;
+      document.getElementById("sort").style.backgroundColor = "#AED6F1";
+      //To disable the button generate random
+      document.getElementById("gr").disabled = true;
+      document.getElementById("gr").style.backgroundColor = "#AED6F1";
+    }
+
+
+    // function to generate 10 bars
+    function Randomarray(num=10) {
+
+      //for loop to generate 20 bars
+     document.getElementById("array").innerHTML="";
+      for (var i = 0; i <= num; i += 1) {
+
+        // To generate random values from 1 to 100
+        const value = Math.floor(Math.random() * 100) + 1;
+
+        // To create element "div"
+        const bar = document.createElement("div");
+
+        // To add class "bar" to "div"
+        bar.classList.add("block");
+
+
+                   bar.style.height = `${value * 3}px`;
+                    bar.style.transform = `translate(${i * 30}px)`;
+
+        const barLabel = document.createElement("label");
+{#          array_ele_label.classList.add("block_id");#}
+
+        // To add class "bar_id" to "label"
+        barLabel.classList.add("block_id");
+
+        // Assign value to "label"
+        barLabel.innerHTML = value;
+
+        // Append "Label" to "div"
+        bar.appendChild(barLabel);
+
+        // Append "div" to "data-container div"
+        container.appendChild(bar);
+      }
+    }
+
+    // function to generate new random array
+{#     function generate1()#}
+{#    {#}
+{#        generatebars1();#}
+{#     }#}
+</script>
+
+<script>
+
+var i=0;
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+
+function  timer1() {
+var x = setInterval(function() {
+    i=i+1;
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+{#  document.getElementById("demo").innerHTML = days + "d " + hours + "h "#}
+{#  + minutes + "m " + seconds + "s ";#}
+
+if(flag==0) {
+    document.getElementById("demo").innerHTML = i.toString();
+}
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
+}
+// Update the count down every 1 second
+</script>
+{% endblock %}

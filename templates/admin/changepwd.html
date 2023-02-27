@@ -1,0 +1,34 @@
+{% extends "admin/admin_index.html" %}
+{% block body %}
+
+    <form  action="/changepwdpost" onsubmit= "return validate()" method="post" enctype="multipart/form-data"><br>
+        <h2 align="center"><strong>Change Password</strong></h2>
+        <table align="center" cellpadding="3px">
+            <tr align="center">
+                <th>Old Password</th>
+                <td><input type="text"  name="o" id="txt_fname" class="form-control" required/></td>
+            </tr><br><br>
+            <tr align="center">
+                <th>New Password</th>
+                <td><input type="text"  name="n" id="txt_lname" class="form-control" required></td>
+            </tr>
+
+             <tr align="center">
+                <th>Confirm Password &nbsp;</th>
+                <td><input type="text"  name="c" id="txt_lname" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2"><input type="submit" class="btn btn-info" id="smtbtn" value="Change"></td>
+            </tr>
+        </table>
+    </form>
+
+<style>
+
+    #smtbtn
+    {
+        margin-top: 10px;
+    }
+
+</style>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "Sort/Sort_container.html" %}
+{% block body %}
+<head>
+	<link rel="stylesheet" href="/static/quick_sort/style.css" />
+    <style>
+
+        .btns {
+            height:40px;
+            width:40px;
+            border-radius:30px;
+        }
+
+    </style>
+</head>
+<body>
+<h2 align="center"><strong>Quick Sort</strong></h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" value="" id="arry" placeholder="Enter elements" class="txt">
+                <input type="button" value="Enter" id="Enter" onclick="Userarray()" class="btn">
+                <input type="button" value="Generate Random" id="gr"onclick="Randomarray()" class="btn">
+                <input type="button" value="Sort" onclick="qsort(),disable()" id="sort" class="btn">
+                <button onClick="window.location.reload();" class="btn">Reset</button>
+            </div>
+            <div class="col-2">
+{#                 <label>Timer</label>#}
+{#                 <p id="demo"><b></b></p>#}
+            </div>
+            <div class="col-2">
+                <label>Delay Speed</label>
+                <input type="range" class="custom-range" min="5" max="1000" value="505" id="myRange">
+            </div>
+        </div>
+    </div>
+
+	<div id="array"></div>
+	<div id="count"></div>
+	<br />
+	<h2 class="range" style="text-align: center"></h2>
+
+     <div>
+     <table>
+        <tr>
+            <td width="60px"><button class="btns" style="background-color: #13CE66" value=""></button></td>
+            <td width="80px">Sorted</td>
+            <td width="60px"><button  class="btns" style="background-color: #FF4949"></button></td>
+            <td width="150px">Left Movement</td>
+            <td width="60px"><button  class="btns" style="background-color: darkgreen"></button></td>
+            <td width="150px">Right Movement</td>
+             <td width="60px"><button class="btns" style="background-color: yellow" value=""></button></td>
+            <td width="130px">Left & Right</td>
+            <td width="60px"><button style="background-color: #6b5b95" class="btns"></button></td>
+            <td width="100px">Default</td>
+        </tr>
+    </table>
+    </div>
+
+	<script src="/static/quick_sort/script.js"></script>
+
+<script>
+
+var i=0;
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+
+function  timer1() {
+var x = setInterval(function() {
+    i=i+1;
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+if(flag==0) {
+    document.getElementById("demo").innerHTML = i.toString();
+}
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
+
+}
+// Update the count down every 1 second
+
+</script>
+</body>
+{% endblock %}
